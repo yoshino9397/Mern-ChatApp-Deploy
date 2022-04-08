@@ -1,4 +1,4 @@
-const app = require('./socket');
+const app = require('./app');
 
 const server = app.listen(8888, () => {
   console.log("Backend server is running!");
