@@ -1,6 +1,6 @@
 import "./register.css";
 import { useRef } from "react";
-import axios from "axios";
+import { publicRequest } from "../../config";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -22,7 +22,7 @@ const Register = () => {
         password: password.current.value,
       };
       try {
-        await axios.post("/auth/register", user);
+        await publicRequest.post("/auth/register", user);
         navigate("/login");
       } catch (err) {
         console.log(err);

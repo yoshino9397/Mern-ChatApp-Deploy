@@ -1,6 +1,6 @@
 import "./rightbar.css";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import { publicRequest } from "../../config";
 import { Link } from "react-router-dom";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
@@ -13,13 +13,13 @@ const Rightbar = ({ user }) => {
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?.id)
+    currentUser.followings.includes(user?._id)
   );
 
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("/users/friends/" + user._id);
+        const friendList = await publicRequest.get("/users/friends/" + user._id);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -31,12 +31,12 @@ const Rightbar = ({ user }) => {
   const handleClick = async () => {
     try {
       if (followed) {
-        await axios.put(`/users/${user._id}/unfollow`, {
+        await publicRequest.put(`/users/${user._id}/unfollow`, {
           userId: currentUser._id,
         });
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
-        await axios.put(`/users/${user._id}/follow`, {
+        await publicRequest.put(`/users/${user._id}/follow`, {
           userId: currentUser._id,
         });
         dispatch({ type: "FOLLOW", payload: user._id });

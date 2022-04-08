@@ -8,7 +8,7 @@ import {
 } from "react-icons/md";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
+import { publicRequest } from "../../config";
 
 const Share = () => {
   const { user } = useContext(AuthContext);
@@ -29,11 +29,11 @@ const Share = () => {
       data.append("file", file);
       newPost.img = fileName;
       try {
-        await axios.post("/upload", data);
+        await publicRequest.post("/upload", data);
       } catch (err) {}
     }
     try {
-      await axios.post("/posts", newPost);
+      await publicRequest.post("/posts", newPost);
       window.location.reload();
     } catch (err) {}
   };
