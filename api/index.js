@@ -13,7 +13,7 @@ app.get("*", (req, res) => {
 });
 
 /////////////////Socket.IO
-const io = require("socket.io")(server, {
+const io = require("socket.io")(8890, {
   cors: {
     origin: "http://localhost:3000",
   },
