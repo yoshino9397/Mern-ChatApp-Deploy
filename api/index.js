@@ -1,7 +1,13 @@
-const app = require('./app');
+const app = require("./app");
 
-const server = app.listen(8888, () => {
+const server = app.listen(process.env.PORT || 8888, () => {
   console.log("Backend server is running!");
+});
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
 });
 
 const io = require("socket.io")(server, {

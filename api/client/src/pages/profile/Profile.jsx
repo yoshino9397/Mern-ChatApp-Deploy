@@ -4,7 +4,7 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
-import axios from "axios";
+import { publicRequest } from "../../config";
 import { useParams } from "react-router";
 
 const Profile = () => {
@@ -14,7 +14,7 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`/users?username=${username}`);
+      const res = await publicRequest.get(`/users?username=${username}`);
       setUser(res.data);
     };
     fetchUser();

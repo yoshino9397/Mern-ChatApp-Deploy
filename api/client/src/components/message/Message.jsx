@@ -2,7 +2,7 @@ import "./message.css";
 import { format } from "timeago.js";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
+import { publicRequest } from "../../config";
 import { useEffect, useState } from "react";
 
 const Message = ({ message, own }) => {
@@ -14,7 +14,7 @@ const Message = ({ message, own }) => {
     const senderId = message.sender;
     const getUser = async () => {
       try {
-        const res = await axios("/users?userId=" + senderId);
+        const res = await publicRequest("/users?userId=" + senderId);
         setPic(res.data);
       } catch (err) {
         console.log(err);

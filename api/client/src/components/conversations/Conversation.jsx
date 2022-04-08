@@ -1,4 +1,4 @@
-import axios from "axios";
+import { publicRequest } from "../../config";
 import { useEffect, useState } from "react";
 import "./conversation.css";
 // import DeleteIcon from "@mui/icons-material/Delete";
@@ -12,7 +12,7 @@ const Conversation = ({ conversation, currentUser }) => {
 
     const getUser = async () => {
       try {
-        const res = await axios("/users?userId=" + friendId);
+        const res = await publicRequest("/users?userId=" + friendId);
         setUser(res.data);
       } catch (err) {
         console.log(err);
