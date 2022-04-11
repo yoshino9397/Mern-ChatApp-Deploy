@@ -47,6 +47,17 @@ const Messenger = () => {
   };
 
   useEffect(() => {
+    socket.current = io("https://yoshino-chatapp.herokuapp.com");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  });
+
+  useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
@@ -146,7 +157,7 @@ const Messenger = () => {
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-          <h3>Online friends</h3>
+            <h3>Online friends</h3>
             <ChatOnline
               onlineUsers={onlineUsers}
               currentId={user._id}
