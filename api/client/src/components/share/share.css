@@ -49,7 +49,7 @@
 .shareOption {
   display: flex;
   align-items: center;
-  margin-right: 15px;
+  margin-right:7px;
   cursor: pointer;
 }
 
@@ -64,7 +64,7 @@
 }
 .shareOptionPic{
   font-size: 12px;
-  background-color: #295d72;
+  background-color: #435b63dc;
   color: rgb(231, 228, 228);
   padding: 3px 7px;
   border-radius: 15px;
