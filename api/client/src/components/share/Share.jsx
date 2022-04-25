@@ -1,9 +1,5 @@
 import "./share.css";
-import {
-  MdLabelImportant,
-  MdRoom,
-  MdPermMedia,
-} from "react-icons/md";
+import { MdLabelImportant, MdRoom, MdPermMedia } from "react-icons/md";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { publicRequest } from "../../config";
@@ -60,11 +56,13 @@ const Share = () => {
             <label htmlFor="file" className="shareOption">
               <MdPermMedia className="shareIcon" style={{ color: "#df7e8a" }} />
               <span className="shareOptionText">Photo or Video</span>
-              <input
-                type="file"
-                id="file"
+              <input style={{ display: "none" }} type="file" id="file" />
+              <span
                 onChange={(e) => setFile(e.target.files[0])}
-              />
+                className="shareOptionPic"
+              >
+                Add Pic
+              </span>
             </label>
             <div className="shareOption">
               <MdLabelImportant
