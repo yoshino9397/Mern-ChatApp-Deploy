@@ -3,6 +3,7 @@ import { MdLabelImportant, MdRoom, MdPermMedia } from "react-icons/md";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { publicRequest } from "../../config";
+import $ from "jquery";
 
 const Share = () => {
   const { user } = useContext(AuthContext);
@@ -31,6 +32,11 @@ const Share = () => {
     } catch (err) {}
   };
 
+  $("input").on("change", function () {
+    var file = $(this).prop("files")[0];
+    $(".shareOptionPic").text(file.name);
+  });
+
   return (
     <div className="share">
       <div className="shareWrapper">
@@ -55,14 +61,15 @@ const Share = () => {
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
               <MdPermMedia className="shareIcon" style={{ color: "#df7e8a" }} />
-              <span className="shareOptionText">Photo or Video</span>
-              <input
-                type="file"
-                id="file"
-                className="shareOptionPic"
-                onChange={(e) => setFile(e.target.files[0])}
-              />
+              <span className="shareOptionText">Photo</span>
             </label>
+            <input
+              type="file"
+              id="file"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+            <span className="shareOptionPic">+</span>
+
             <div className="shareOption">
               <MdLabelImportant
                 style={{ color: "#2b6684" }}
