@@ -1,10 +1,8 @@
 import "./share.css";
-import { IconContext } from "react-icons";
 import {
   MdLabelImportant,
   MdRoom,
   MdPermMedia,
-  MdCancel,
 } from "react-icons/md";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -18,21 +16,20 @@ const Share = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const newPost = {
-      userId: user._id,
-      desc: desc.current.value,
-    };
-    if (file) {
-      const data = new FormData();
-      const fileName = Date.now() + file.name;
-      data.append("name", fileName);
-      data.append("file", file);
-      newPost.img = fileName;
-      try {
-        await publicRequest.post("/upload", data);
-      } catch (err) {}
-    }
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "uploads");
     try {
+      const uploadRes = await publicRequest.post(
+        "https://api.cloudinary.com/v1_1/dz47zx0rk/image/upload",
+        data
+      );
+      const { url } = uploadRes.data;
+      const newPost = {
+        userId: user._id,
+        desc: desc.current.value,
+        img: url,
+      };
       await publicRequest.post("/posts", newPost);
       window.location.reload();
     } catch (err) {}
@@ -58,27 +55,14 @@ const Share = () => {
           />
         </div>
         <hr className="shareHr" />
-        {file && (
-          <div className="shareImgContainer">
-            <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
-            <IconContext.Provider value={{ color: "gray", size: "30px" }}>
-              <MdCancel
-                className="shareCancelImg"
-                onClick={() => setFile(null)}
-              />
-            </IconContext.Provider>
-          </div>
-        )}
         <form className="shareBottom" onSubmit={submitHandler}>
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
               <MdPermMedia className="shareIcon" style={{ color: "#df7e8a" }} />
               <span className="shareOptionText">Photo or Video</span>
               <input
-                style={{ display: "none" }}
                 type="file"
                 id="file"
-                accept=".png,.jpeg,.jpg"
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </label>

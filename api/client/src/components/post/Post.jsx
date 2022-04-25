@@ -29,7 +29,9 @@ const Post = ({ post }) => {
 
   const likeHandler = () => {
     try {
-      publicRequest.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+      publicRequest.put("/posts/" + post._id + "/like", {
+        userId: currentUser._id,
+      });
     } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -59,7 +61,7 @@ const Post = ({ post }) => {
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={PF + post.img} alt="" />
+          <img className="postImg" src={post.img} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
@@ -70,7 +72,7 @@ const Post = ({ post }) => {
                 height: "18px",
                 margin: "0 5px 0 0 ",
                 cursor: "pointer",
-                color: "#d73d6c"
+                color: "#d73d6c",
               }}
             />
             <span className="postLikeCounter">{like} like</span>
