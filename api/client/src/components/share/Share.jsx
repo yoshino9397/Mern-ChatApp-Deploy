@@ -56,7 +56,7 @@ const Share = () => {
             <label htmlFor="file" className="shareOption">
               <MdPermMedia className="shareIcon" style={{ color: "#df7e8a" }} />
               <span className="shareOptionText">Photo or Video</span>
-              <input type="file" id="file" style={{ display: "none" }} />
+              <input type="file" style={{ display: "none" }} />
               <span
                 id="file"
                 onChange={(e) => setFile(e.target.files[0])}
