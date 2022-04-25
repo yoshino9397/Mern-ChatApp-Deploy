@@ -63,11 +63,12 @@
   font-weight: 500;
 }
 .shareOptionPic{
-  font-size: 10px;
-  background-color: #7a9ba6dc;
-  color: rgb(235, 229, 229);
-  padding: 2px 7px;
+  font-size: 11px;
+  background-color: #c49ec4dc;
+  color: rgb(77, 76, 76);
+  padding: 2px 5px;
   border-radius: 15px;
+  margin-right:10px;
 }
 
 .shareButton {

@@ -59,21 +59,17 @@ const Share = () => {
         <hr className="shareHr" />
         <form className="shareBottom" onSubmit={submitHandler}>
           <div className="shareOptions">
-            <div className="shareOption">
-              <label htmlFor="file">
-                <MdPermMedia
-                  className="shareIcon"
-                  style={{ color: "#df7e8a" }}
-                />
-                <span className="shareOptionText">Photo</span>
-              </label>
-              <input
-                type="file"
-                id="file"
-                onChange={(e) => setFile(e.target.files[0])}
-              />
-              <span className="shareOptionPic">+</span>
-            </div>
+            <label htmlFor="file" className="shareOption">
+              <MdPermMedia className="shareIcon" style={{ color: "#df7e8a" }} />
+              <span className="shareOptionText">Photo</span>
+            </label>
+            <input
+              type="file"
+              id="file"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+            <span className="shareOptionPic">+</span>
+
             <div className="shareOption">
               <MdLabelImportant
                 style={{ color: "#2b6684" }}
