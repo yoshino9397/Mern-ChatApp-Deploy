@@ -68,8 +68,6 @@ const Share = () => {
               id="file"
               onChange={(e) => setFile(e.target.files[0])}
             />
-            <span className="shareOptionPic">+</span>
-
             <div className="shareOption">
               <MdLabelImportant
                 style={{ color: "#2b6684" }}
