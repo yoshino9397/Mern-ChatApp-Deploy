@@ -1,9 +1,14 @@
 import "./share.css";
-import { MdLabelImportant, MdRoom, MdPermMedia } from "react-icons/md";
+import { IconContext } from "react-icons";
+import {
+  MdLabelImportant,
+  MdRoom,
+  MdPermMedia,
+  MdCancel,
+} from "react-icons/md";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { publicRequest } from "../../config";
-import $ from "jquery";
 
 const Share = () => {
   const { user } = useContext(AuthContext);
@@ -13,29 +18,35 @@ const Share = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "uploads");
-    try {
-      const uploadRes = await publicRequest.post(
-        "https://api.cloudinary.com/v1_1/dz47zx0rk/image/upload",
-        data
-      );
-      const { url } = uploadRes.data;
+    if (file) {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "uploads");
+      try {
+        const uploadRes = await publicRequest.post(
+          "https://api.cloudinary.com/v1_1/dz47zx0rk/image/upload",
+          data
+        );
+        const { url } = uploadRes.data;
+        const newPost = {
+          userId: user._id,
+          desc: desc.current.value,
+          img: url,
+        };
+        await publicRequest.post("/posts", newPost);
+        window.location.reload();
+      } catch (err) {}
+    } else {
       const newPost = {
         userId: user._id,
         desc: desc.current.value,
-        img: url,
       };
-      await publicRequest.post("/posts", newPost);
-      window.location.reload();
-    } catch (err) {}
+      try {
+        await publicRequest.post("/posts", newPost);
+        window.location.reload();
+      } catch (err) {}
+    }
   };
-
-  $("input").on("change", function () {
-    var file = $(this).prop("files")[0];
-    $(".shareOptionPic").text(file.name);
-  });
 
   return (
     <div className="share">
@@ -57,6 +68,17 @@ const Share = () => {
           />
         </div>
         <hr className="shareHr" />
+        {file && (
+          <div className="shareImgContainer">
+            <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
+            <IconContext.Provider value={{ color: "gray", size: "30px" }}>
+              <MdCancel
+                className="shareCancelImg"
+                onClick={() => setFile(null)}
+              />
+            </IconContext.Provider>
+          </div>
+        )}
         <form className="shareBottom" onSubmit={submitHandler}>
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
